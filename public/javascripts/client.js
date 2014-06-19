@@ -51,7 +51,7 @@ function addItemsToList(cont, items, click, mediaClick)
 			}
 
 			if (e.thumb)
-				a.append($('<img></img>').addClass('ui-li-thumb').attr('src', '/image/' + e.thumb + '?h=80'));
+				a.append($('<img></img>').addClass('ui-li-thumb').attr('src', e.thumb + '?h=80'));
 
 			a.append($('<h3></h3>').addClass('ui-li-heading').text(e.title));
 
@@ -88,7 +88,7 @@ var _browse = (function()
 				function click(el)
 				{
 					_path = $(el.currentTarget).data('item').path;
-					refresh;
+					refresh();
 				}
 
 				_data.forEach(function(e)
