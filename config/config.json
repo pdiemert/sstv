@@ -1,0 +1,26 @@
+{
+	"development": {
+		"username": "sstv",
+		"password": "sstv",
+		"database": "data.sqlite",
+		"storage": "data.sqlite",
+		"host": "localhost",
+		"dialect": "sqlite"
+	},
+	"test": {
+		"username": "sstv",
+		"password": "sstv",
+		"database": "data.sqlite",
+		"storage": "data.sqlite",
+		"host": "localhost",
+		"dialect": "sqlite"
+	},
+	"production": {
+		"username": "sstv",
+		"password": "sstv",
+		"database": "data.sqlite",
+		"storage": "data.sqlite",
+		"host": "localhost",
+		"dialect": "sqlite"
+	}
+}

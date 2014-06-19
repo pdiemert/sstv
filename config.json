@@ -1,0 +1,15 @@
+
+{
+	"mpv_command" : "/usr/local/bin/mpv",
+	"thetvdb_apikey" : "FF7E46A89F28BBE2",
+	"themoviedb_apikey" : "e452c43554c30479b59b6d2465f8e62a",
+	"media_dir" : "/Volumes/c$/Media",
+	"image_dir" : "images",
+	"mpv_extensions" : ["3GP", "3IV", "3GP", "3IV", "ASF", "AVI", "CPK", "DAT", "DIVX", "DV", "FLAC", "FLI", "FLV", "H264", "I263", "M2TS", "M4V", "MKV", "MOV", "MP2", "MP4", "MPEG", "MPG", "MPG2", "MPG4", "NSV", "NUT", "NUV", "OGG", "OGM", "QT", "RM", "RMVB", "VCD", "VFW", "VOB", "WEBM", "WMV"],
+	"refresh_on_start" : false,
+	"fullscreen" : true,
+	"desktop_overlay" : false,
+	"debug" : true
+
+
+}

@@ -1,0 +1,80 @@
+extends layout
+block head
+    meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui")
+
+    link(rel="stylesheet", href="/javascripts/jquery/mobile/jquery.mobile-1.4.2.min.css")
+    link(rel='stylesheet', href="/stylesheets/icons.css")
+    link(rel='stylesheet', href="/stylesheets/iphone.css")
+    script(src="/javascripts/jquery/jquery-1.11.1.js")
+    script(src="/javascripts/jquery/mobile/jquery.mobile-1.4.2.min.js")
+
+    script(src="/javascripts/client.js", type="text/javascript")
+
+mixin nav(panel)
+    div(data-role="navbar")
+        ul
+            li
+                a(href="#browse", data-transition="none", class!=(panel=="browse"?"ui-btn-active ui-state-persist":"")) Browse
+            li
+                a(href="#player", data-transition="none", class!=(panel=="player"?"ui-btn-active ui-state-persist":"")) Player
+            li
+                a(href="#recent", data-transition="none", class!=(panel=="recent"?"ui-btn-active ui-state-persist":"")) Recent
+            li
+                a(href="#new", data-transition="none", class!=(panel=="new"?"ui-btn-active ui-state-persist":"")) New
+
+block content
+    div(data-role="page", data-theme="b")#browse
+        div(data-role="header" data-position="fixed")
+            a(data-role="back")#back Back
+            h1 Browse
+        div(data-role="content")
+            ul(data-role='listview')
+        div(data-role="footer", data-position="fixed")
+            +nav("browse")
+
+    div(data-role="page", data-theme="b")#recent
+        div(data-role="header" data-position="fixed")
+            h1 Recent
+        div(data-role="content")
+            ul(data-role='listview')
+        div(data-role="footer", data-position="fixed")
+            +nav("recent")
+
+    div(data-role="page", data-theme="b")#player
+        div(data-role="header" data-position="fixed")
+            h1 Player
+        div(data-role="content")
+            table(width="100%", cellspacing="0", cellpadding="5px")
+                tr
+                    td(colspan="2")
+                        a(href="#", data-role="button", style="height:50px")#btnPlay Play
+                tr
+                    td
+                        a(href="#", data-role="button")#btnBack1 &lt;
+                    td
+                        a(href="#", data-role="button")#btnFor1 &gt;
+                tr
+                    td
+                        a(href="#", data-role="button")#btnBack10 &lt;&lt;
+                    td
+                        a(href="#", data-role="button")#btnFor10 &gt;&gt;
+                tr
+                    td
+                    td
+                        a(href="#", data-role="button")#btnMute Mute
+                tr
+                    td
+                        a(href="#", data-role="button")#btnSeekStart |&lt;&lt;
+                    td
+                        a(href="#", data-role="button")#btnStop Stop
+
+        div(data-role="footer", data-position="fixed")
+            +nav("player")
+
+    div(data-role="page", data-theme="b")#new
+        div(data-role="header" data-position="fixed")
+            h1 New
+        div(data-role="content")
+            ul(data-role='listview')
+        div(data-role="footer", data-position="fixed")
+            +nav("new")
