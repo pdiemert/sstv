@@ -13,6 +13,7 @@
 		"cookie-parser": "~1.0.1",
 		"debug": "~0.7.4",
 		"express": "~4.2.0",
+		"feedparser": "0.18.0",
 		"gm": "1.16.0",
 		"imdb-api": "1.3.3",
 		"jade": "~1.3.0",

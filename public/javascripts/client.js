@@ -5,7 +5,7 @@ $(function()
 	$('#recent').on('pageshow', _recent.init);
 	$('#new').on('pageshow', _new.init);
 
-	_browse.init();
+	//_browse.init();
 });
 
 function addItemsToList(cont, items, click, mediaClick)
@@ -198,6 +198,14 @@ var _recent = (function()
 {
 	function refresh()
 	{
+		$.ajax({
+			url : '/api/recent',
+			complete: function(data, status)
+			{
+				var cont = $('#recent ul[data-role="listview"]');
+
+				addItemsToList(cont, data.responseJSON);
+			}});
 
 	}
 	return {
@@ -213,9 +221,9 @@ var _new = (function()
 			url : '/api/new',
 			complete: function(data, status)
 			{
-				var cont = $('#browse ul[data-role="listview"]');
+				var cont = $('#new ul[data-role="listview"]');
 
-				addItemsToList(cont, data);
+				addItemsToList(cont, data.responseJSON);
 			}});
 
 	}

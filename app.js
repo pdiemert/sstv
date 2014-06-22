@@ -36,7 +36,9 @@ app.use('/image', require('./routes/image'));
 
 /// catch 404 and forward to error handler
 app.use(function(err, req, res, next) {
-	_logger.err(req.path + ' not found');
+	_logger.err('error loading ' + req.path );
+	if (err)
+		console.error(err.stack ? err.stack : err);
 
 	res.status(err.status || 500);
 	res.render('error', {

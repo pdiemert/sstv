@@ -8,6 +8,7 @@ var _applescript = require('applescript');
 var _conf = global.conf = require('./config.json');
 var _pkg = require('./package.json');
 var _logger = require('./lib/logger');
+var _helper = require('./lib/helper');
 
 _logger.info('SSTV v%s using Node v%s', _pkg.version, process.version);
 
@@ -31,5 +32,7 @@ var server = app.listen(app.get('port'), function() {
 
 		});
 	}
+
+	_helper.loadWatchers();
 });
 
