@@ -10,5 +10,5 @@
 	"fullscreen" : true,
 	"desktop_overlay" : false,
 	"debug" : true,
-	"webvideo_subscriptions" : {"wimp" : "all"}
+	"webvideo_subscriptions" : {"wimp" : "all", "youtube" : { "channel" : "TEDtalksDirector", "title" : "TED"}}
 }

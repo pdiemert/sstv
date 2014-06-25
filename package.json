@@ -31,6 +31,7 @@
 		"sqlite3": "2.2.3",
 		"static-favicon": "~1.0.0",
 		"stylus": "0.42.3",
+		"underscore": "1.6.0",
 		"underscore.string": "2.3.3",
 		"sequelize": "1.7.5"
 	}
