@@ -7,7 +7,7 @@ var _router = _express.Router();
 var _path = require('path');
 
 var _player = require('../lib/player');
-var _channels = require('../lib/channels');
+var _channels = require('../lib/browse');
 var _db = require('../lib/db');
 var _moment = require('moment');
 
@@ -109,6 +109,8 @@ function makeItems(res)
 		else if (e.type == 'WebVideo')
 		{
 			item.title = e.source_name;
+			if (e.channel_name)
+				item.title += ' - ' + e.channel_name;
 			item.html = e.title;
 		}
 		else

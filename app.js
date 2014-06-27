@@ -4,7 +4,7 @@ var _conf = global.conf;
 var _logger = require('./lib/logger');
 
 require('./lib/db');
-require('./lib/channels');
+require('./lib/browse');
 
 var express = require('express');
 var path = require('path');
