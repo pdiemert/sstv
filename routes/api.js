@@ -19,9 +19,10 @@ _router.get('/player/play', function (req, res)
 
 _router.get('/player/start/:media_id', function (req, res)
 {
-	_player.startMedia(req.params.media_id);
-
-	res.send({ mode : _player.mode() });
+	_player.startMedia(req.params.media_id, function()
+	{
+		res.send({ mode : _player.mode() });
+	});
 });
 
 _router.get('/player/stop', function (req, res)
@@ -51,6 +52,12 @@ _router.get('/player/mute', function (req, res)
 
 	res.send({ mode : _player.mode() });
 });
+
+_router.get('/player/mode', function (req, res)
+{
+	res.send({ mode : _player.mode() });
+});
+
 
 _router.get('/browse*', function(req, res)
 {

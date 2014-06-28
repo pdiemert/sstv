@@ -1,3 +1,23 @@
+function seek_01_handler()
+    mp.command("seek 10");
+    print("ack / =");
+
+    mp.command("show_progress");
+end
+mp.add_key_binding("=", "seek01", seek_01_handler)
+
+function seek_b01_handler()
+    mp.command("seek -10");
+    print("ack / [");
+
+    mp.command("show_progress");
+end
+mp.add_key_binding("[", "seekb01", seek_b01_handler)
+
+
+
+
+
 function seek_1_handler()
     mp.command("seek 60");
     print("ack / !");
@@ -6,19 +26,20 @@ function seek_1_handler()
 end
 mp.add_key_binding("!", "seek1", seek_1_handler)
 
-function seek_10_handler()
-    mp.command("seek 600");
-    print("ack / @");
-    mp.command("show_progress");
-end
-mp.add_key_binding("@", "seek10", seek_10_handler)
-
 function seek_b1_handler()
     mp.command("seek -60");
     print("ack / *");
     mp.command("show_progress");
 end
 mp.add_key_binding("*", "seekb1", seek_b1_handler)
+
+
+function seek_10_handler()
+    mp.command("seek 600");
+    print("ack / @");
+    mp.command("show_progress");
+end
+mp.add_key_binding("@", "seek10", seek_10_handler)
 
 function seek_b10_handler()
     mp.command("seek -600");

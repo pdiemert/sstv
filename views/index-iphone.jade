@@ -2,11 +2,16 @@ extends layout
 block head
     meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui")
 
-    link(rel="stylesheet", href="/javascripts/jquery/mobile/jquery.mobile-1.4.2.min.css")
+    link(rel="stylesheet", href="/jquery/mobile/css/themes/default/jquery.mobile-1.4.2.min.css")
+    //link(rel="stylesheet", href="/javascripts/jquery/mobile/jquery.mobile-1.4.2.min.css")
     link(rel='stylesheet', href="/stylesheets/icons.css")
     link(rel='stylesheet', href="/stylesheets/iphone.css")
-    script(src="/javascripts/jquery/jquery-1.11.1.js")
-    script(src="/javascripts/jquery/mobile/jquery.mobile-1.4.2.min.js")
+
+
+    script(src="/jquery/jquery.js")
+    script(src="/jquery/mobile/jquery.mobile-1.4.2.min.js")
+    //script(src="/javascripts/jquery/jquery-1.11.1.js")
+    //script(src="/javascripts/jquery/mobile/jquery.mobile-1.4.2.min.js")
 
     script(src="/javascripts/client.js", type="text/javascript")
 
@@ -25,7 +30,7 @@ mixin nav(panel)
 block content
     div(data-role="page", data-theme="b")#browse
         div(data-role="header" data-position="fixed")
-            a(data-role="back")#back Back
+            a(data-role="button", data-rel="back", role="back")#back Back
             h1 Browse
         div(data-role="content")
             ul(data-role='listview')
@@ -44,20 +49,25 @@ block content
         div(data-role="header" data-position="fixed")
             h1 Player
         div(data-role="content")
-            table(width="100%", cellspacing="0", cellpadding="5px")
+            table(width="100%", cellspacing="0", cellpadding="2px")
                 tr
                     td(colspan="2")
                         a(href="#", data-role="button", style="height:50px")#btnPlay Play
                 tr
                     td
-                        a(href="#", data-role="button")#btnBack1 &lt;
+                        a(href="#", data-role="button")#btnBack10 &lt;
                     td
-                        a(href="#", data-role="button")#btnFor1 &gt;
+                        a(href="#", data-role="button")#btnFor10 &gt;
                 tr
                     td
-                        a(href="#", data-role="button")#btnBack10 &lt;&lt;
+                        a(href="#", data-role="button")#btnBack60 &lt;&lt;
                     td
-                        a(href="#", data-role="button")#btnFor10 &gt;&gt;
+                        a(href="#", data-role="button")#btnFor60 &gt;&gt;
+                tr
+                    td
+                        a(href="#", data-role="button")#btnBack600 &lt;&lt;&lt;
+                    td
+                        a(href="#", data-role="button")#btnFor600 &gt;&gt;&gt;
                 tr
                     td
                     td

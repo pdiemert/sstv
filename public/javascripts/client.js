@@ -1,12 +1,4 @@
-$(function()
-{
-	$('#browse').on('pageshow', _browse.init);
-	$('#player').on('pageshow', _player.init);
-	$('#recent').on('pageshow', _recent.init);
-	$('#new').on('pageshow', _new.init);
 
-	//_browse.init();
-});
 
 function addItemsToList(cont, items, click, mediaClick)
 {
@@ -81,7 +73,7 @@ var _browse = (function()
 			url : '/api/browse' + _path,
 			complete: function(data, status)
 			{
-				_data = data.responseJSON;
+				_data = JSON.parse(data.responseText);
 
 				var cont = $('#browse ul[data-role="listview"]');
 
@@ -114,8 +106,9 @@ var _browse = (function()
 
 	});
 
+	$( document ).delegate("#browse", "pagecreate", refresh);
+
 	return {
-		init : refresh
 	};
 })();
 
@@ -123,14 +116,45 @@ var _player = (function()
 {
 	var _playing;
 	var _mode;
+	var _last;
 
 	function doAction(a)
 	{
 		$.ajax({url : '/api/player/' + a, complete: function(data)
 		{
 			_mode = data.responseJSON.mode;
+
+			/*
+			if (m != _last)
+			{
+				switch(_mode)
+				{
+					case 'play':
+						//$.mobile.activePage.attr('id')
+						break;
+					case 'stop':
+					case 'fail':
+						if (_playing)
+						{
+							_playing = null;
+							$.mobile.back();
+						}
+						break;
+				}
+
+				_mode = m;
+			}
+
+			_last = m;
+			*/
+
 			refresh();
 		}});
+	}
+
+	function monitor()
+	{
+		doAction('mode');
 	}
 
 	function startMedia(id)
@@ -161,21 +185,29 @@ var _player = (function()
 		{
 			doAction('pause');
 		});
-		$('#btnFor1').click(function()
-		{
-			doAction('seek/1');
-		});
 		$('#btnFor10').click(function()
 		{
 			doAction('seek/10');
 		});
-		$('#btnBack1').click(function()
-		{
-			doAction('seek/-1');
-		});
 		$('#btnBack10').click(function()
 		{
 			doAction('seek/-10');
+		});
+		$('#btnFor60').click(function()
+		{
+			doAction('seek/60');
+		});
+		$('#btnBack60').click(function()
+		{
+			doAction('seek/-60');
+		});
+		$('#btnFor600').click(function()
+		{
+			doAction('seek/600');
+		});
+		$('#btnBack600').click(function()
+		{
+			doAction('seek/-600');
 		});
 		$('#btnSeekStart').click(function()
 		{
@@ -187,9 +219,9 @@ var _player = (function()
 		});
 	});
 
+	$( document ).delegate("#player", "pagecreate", refresh);
 
 	return {
-		init : refresh,
 		startMedia : startMedia
 	};
 })();
@@ -208,6 +240,9 @@ var _recent = (function()
 			}});
 
 	}
+
+	$( document ).delegate("#recent", "pagecreate", refresh);
+
 	return {
 		init : refresh
 	};
@@ -227,9 +262,14 @@ var _new = (function()
 			}});
 
 	}
+
+	$( document ).delegate("#new", "pagecreate", refresh);
+
 	return {
-		init : refresh
 	};
 })();
+
+
+
 
 
