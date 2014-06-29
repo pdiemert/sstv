@@ -59,6 +59,22 @@ _router.get('/player/mode', function (req, res)
 });
 
 
+function makeItems(res)
+{
+	return res.map(function(e)
+	{
+		var item = e.values || e;
+
+		if (item.poster_file)
+			item.thumb_path = _path.join(_conf.image_dir, item.poster_file);
+
+		if (item.type === 'TV')
+			item.airago = _moment([item.airyear, item.airmonth - 1, item.airday]).fromNow();
+
+		return item;
+	});
+}
+
 _router.get('/browse*', function(req, res)
 {
 	var url = _url.parse(req.url);
@@ -74,86 +90,10 @@ _router.get('/browse*', function(req, res)
 		if (err)
 			return res.send([]);
 
-		res.send(items);
+		res.send(makeItems(items));
 	});
 });
 
-
-function makeItems(res)
-{
-	return res.map(function(e) {
-
-		var item = { media_id : e.id };
-		if (e.poster_file)
-			item.thumb = _path.join(_conf.image_dir, e.poster_file);
-
-		if (e.type == 'TV')
-		{
-			item.title = e.series;
-
-			var html = '';
-
-			if (e.title)
-			{
-				html += e.title;
-				if (e.season_number)
-					html += '&nbsp;/ S' + e.season_number + 'xE' + e.episode_number;
-			}
-			else
-			{
-				if (e.season_number)
-					html = 'Season ' + e.season_number + ', Episode ' + e.episode_number;
-			}
-
-			if (e.airyear && e.airmonth && e.airday)
-			{
-				if (html.length)
-					html += '<br>';
-				html += 'Aired ' + _moment([e.airyear, e.airmonth - 1, e.airday]).fromNow();
-			}
-			item.html = html;
-		}
-		else if (e.type == 'WebVideo')
-		{
-			item.title = e.source_name;
-			if (e.channel_name)
-				item.title += ' - ' + e.channel_name;
-			item.html = e.title;
-		}
-		else
-		{
-			item.title = e.title + ' (' + e.year + ')';
-
-			if (e.rating)
-			{
-				html = '';
-
-				for(var i=0; i < e.rating; i++)
-				{
-					html += '★'; /*e.rating >= (i+1) ? : '☆'*/ ;
-				}
-
-				html += '&nbsp;- ' + e.rating + ' / 10<br>' + e.votes + ' votes';
-
-				item.html = html;
-			}
-		}
-
-		if (e.last_play_progress_sec)
-		{
-			item.html += '&nbsp;/ ';
-
-			var perc = (e.last_play_progress_sec / e.duration_sec) * 10;
-			for(var i=0; i < 10; i++)
-				item.html += i < perc ? ':' : '.';
-
-			item.html += '&nbsp;' + ((e.duration_sec - e.last_play_progress_sec) / 60).toFixed(0) + 'm left';
-
-		}
-
-		return item;
-	});
-}
 
 _router.get('/new', function(req, response)
 {

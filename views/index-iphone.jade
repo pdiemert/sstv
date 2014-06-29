@@ -21,8 +21,6 @@ mixin nav(panel)
             li
                 a(href="#browse", data-transition="none", class!=(panel=="browse"?"ui-btn-active ui-state-persist":"")) Browse
             li
-                a(href="#player", data-transition="none", class!=(panel=="player"?"ui-btn-active ui-state-persist":"")) Player
-            li
                 a(href="#recent", data-transition="none", class!=(panel=="recent"?"ui-btn-active ui-state-persist":"")) Recent
             li
                 a(href="#new", data-transition="none", class!=(panel=="new"?"ui-btn-active ui-state-persist":"")) New
@@ -30,8 +28,9 @@ mixin nav(panel)
 block content
     div(data-role="page", data-theme="b")#browse
         div(data-role="header" data-position="fixed")
-            a(data-role="button", data-rel="back", role="back")#back Back
+            a(data-role="button")#btnBrowseBack Back
             h1 Browse
+            a(data-role="button", class="ui-btn-right").btnPlayer Player
         div(data-role="content")
             ul(data-role='listview')
         div(data-role="footer", data-position="fixed")
@@ -40,12 +39,22 @@ block content
     div(data-role="page", data-theme="b")#recent
         div(data-role="header" data-position="fixed")
             h1 Recent
+            a(data-role="button", class="ui-btn-right").btnPlayer Player
         div(data-role="content")
             ul(data-role='listview')
         div(data-role="footer", data-position="fixed")
             +nav("recent")
 
-    div(data-role="page", data-theme="b")#player
+    div(data-role="page", data-theme="b")#new
+        div(data-role="header" data-position="fixed")
+            h1 New
+            a(data-role="button", class="ui-btn-right").btnPlayer Player
+        div(data-role="content")
+            ul(data-role='listview')
+        div(data-role="footer", data-position="fixed")
+            +nav("new")
+
+    div(data-role="page", data-theme="b", data-overlay-theme="b")#player
         div(data-role="header" data-position="fixed")
             h1 Player
         div(data-role="content")
@@ -77,14 +86,3 @@ block content
                         a(href="#", data-role="button")#btnSeekStart |&lt;&lt;
                     td
                         a(href="#", data-role="button")#btnStop Stop
-
-        div(data-role="footer", data-position="fixed")
-            +nav("player")
-
-    div(data-role="page", data-theme="b")#new
-        div(data-role="header" data-position="fixed")
-            h1 New
-        div(data-role="content")
-            ul(data-role='listview')
-        div(data-role="footer", data-position="fixed")
-            +nav("new")

@@ -17,7 +17,7 @@ function addItemsToList(cont, items, click, mediaClick)
 				{
 					var id = $(el.currentTarget).data('media_id');
 
-					if (id)
+					if (id && e.type != 'Section')
 						return _player.startMedia(id);
 
 					if (click)
@@ -25,33 +25,94 @@ function addItemsToList(cont, items, click, mediaClick)
 				})
 				.appendTo(li);
 
-			if (e.media_id)
+			var html = '';
+
+			if (e.id)
 			{
-				a.data('media_id', e.media_id);
-				$('<a></a>')
-					.click(function(el)
-					{
-						var id = $(el.currentTarget).data('media_id');
-
-						if (id)
-							return _player.startMedia(id);
-
-						if (mediaClick)
-							mediaClick(el);
-					})
-					.appendTo(li);
+				a.data('media_id', e.id);
 			}
 
-			if (e.thumb)
-				a.append($('<img></img>').addClass('ui-li-thumb').attr('src', e.thumb + '?h=80'));
 
-			a.append($('<h3></h3>').addClass('ui-li-heading').text(e.title));
+			if (e.thumb_path)
+				a.append($('<img></img>').addClass('ui-li-thumb').attr('src', e.thumb_path + '?h=80'));
 
-			if (e.text)
-				$('<p></p>').text(e.text).appendTo(a);
-			if (e.html)
-				$('<p></p>').html(e.html).appendTo(a);
+			if (e.type === 'Section')
+			{
+				a.append($('<h3></h3>').addClass('ui-li-heading').text(e.title));
+			}
+			else if (e.type === 'TV')
+			{
+				a.append($('<h3></h3>').addClass('ui-li-heading').text(e.series));
 
+				if (e.title)
+				{
+					html += e.title;
+					if (e.season_number)
+						html += '&nbsp;/ S' + e.season_number + 'xE' + e.episode_number;
+				}
+				else
+				{
+					if (e.season_number)
+						html = 'Season ' + e.season_number + ', Episode ' + e.episode_number;
+				}
+
+				if (e.airyear && e.airmonth && e.airday)
+				{
+					if (html.length)
+						html += '<br>';
+					html += 'Aired ' + e.airago;
+				}
+
+			}
+			else if (e.type === 'Movie')
+			{
+				a.append($('<h3></h3>').addClass('ui-li-heading').text(e.title + ' (' + e.year + ')'));
+
+				if (e.rating)
+				{
+					for(var i=0; i < e.rating; i++)
+					{
+						html += '★'; /*e.rating >= (i+1) ? : '☆'*/ ;
+					}
+
+					html += '&nbsp;- ' + e.rating + ' / 10<br>' + e.votes + ' votes';
+				}
+
+			}
+			else if (e.type === 'WebVideo')
+			{
+				var title = e.source_name;
+				if (e.channel_name)
+					title += ' - ' + e.channel_name;
+
+				a.append($('<h3></h3>').addClass('ui-li-heading').text(title));
+
+				html = e.title;
+			}
+
+			if (e.last_play_progress_sec)
+			{
+				html += '&nbsp;/ ';
+
+				var perc = (e.last_play_progress_sec / e.duration_sec) * 10;
+				for(var i=0; i < 10; i++)
+					html += i < perc ? ':' : '.';
+
+				var remain = e.duration_sec - e.last_play_progress_sec;
+
+				var txt;
+				if (remain > 3600)
+				{
+					txt = Math.floor(remain / 3600) + 'h ' + Math.floor((remain % 3600) / 60) + 'm left';
+				}
+				else
+					txt = Math.floor(remain / 60) + 'm left';
+
+				html += '&nbsp;' + txt;
+
+			}
+
+			$('<p></p>').html(html).appendTo(a);
 
 			li.appendTo(cont);
 		});
@@ -66,6 +127,7 @@ var _browse = (function()
 
 	var _path = '';
 	var _data;
+
 
 	function refresh()
 	{
@@ -90,19 +152,23 @@ var _browse = (function()
 
 				addItemsToList(cont, _data, click, click);
 
-				$('#browse div[data-role="header"] a').toggle(_path.length > 0);
+				$('#btnBrowseBack').toggle(_path.length > 0);
 			}});
 	}
 
 
 	$(function()
 	{
-		$('#back').click(function()
+		$('#btnBrowseBack').click(function()
 		{
 			_path = _path.substr(0, _path.lastIndexOf('/'));
 
 			refresh();
 		});
+
+		$('#player').on('playerStateChanged', refresh);
+
+		$('#browse ul[data-role="listview"]').listview();
 
 	});
 
@@ -115,53 +181,75 @@ var _browse = (function()
 var _player = (function()
 {
 	var _playing;
-	var _mode;
-	var _last;
+	var _mode = 'stop';
+	var _active;
+
 
 	function doAction(a)
 	{
 		$.ajax({url : '/api/player/' + a, complete: function(data)
 		{
-			_mode = data.responseJSON.mode;
-
-			/*
-			if (m != _last)
-			{
-				switch(_mode)
-				{
-					case 'play':
-						//$.mobile.activePage.attr('id')
-						break;
-					case 'stop':
-					case 'fail':
-						if (_playing)
-						{
-							_playing = null;
-							$.mobile.back();
-						}
-						break;
-				}
-
-				_mode = m;
-			}
-
-			_last = m;
-			*/
-
-			refresh();
+			setMode(data.responseJSON.mode);
 		}});
 	}
 
+	function setMode(mode)
+	{
+		if (mode != _mode)
+		{
+			console.log('Going from %s to %s', _mode, mode);
+
+			_mode = mode;
+
+			switch(_mode)
+			{
+				case 'play':
+					$.mobile.changePage('#player', { role : 'dialog' });
+					$('#player').on('pagehide', handleHide);
+					$('.btnPlayer').show();
+					$('#player').trigger('playerStateChanged');
+					break;
+				case 'stop':
+				case 'fail':
+					$('#player').dialog('close');
+					_active = false;
+					$('.btnPlayer').hide();
+					$('#player').trigger('playerStateChanged');
+					break;
+			}
+
+			refresh();
+		}
+	}
 	function monitor()
 	{
-		doAction('mode');
+		if (!_active)
+			return;
+
+		$.ajax({url : '/api/player/mode', complete: function(data)
+		{
+			setMode(data.responseJSON.mode);
+
+			setTimeout(monitor, 1000);
+
+		}});
+	}
+
+	function handleHide()
+	{
+		$('#player').off('pagehide', handleHide);
 	}
 
 	function startMedia(id)
 	{
 		_playing = id;
 
-		$.mobile.changePage('#player');
+		if (!_active)
+		{
+			_active = true;
+
+			monitor();
+		}
 
 		doAction('start/' + id);
 	}
@@ -217,9 +305,21 @@ var _player = (function()
 		{
 			doAction('mute');
 		});
+
+		$('.btnPlayer').click(function()
+		{
+			$.mobile.changePage('#player', { role : 'dialog' });
+		});
+		$('.btnPlayer').hide();
+
 	});
 
 	$( document ).delegate("#player", "pagecreate", refresh);
+
+	$(function()
+	{
+		$('#player').dialog();
+	});
 
 	return {
 		startMedia : startMedia
@@ -242,6 +342,12 @@ var _recent = (function()
 	}
 
 	$( document ).delegate("#recent", "pagecreate", refresh);
+	$(function()
+	{
+		$('#recent ul[data-role="listview"]').listview();
+
+		$('#player').on('playerStateChanged', refresh);
+	});
 
 	return {
 		init : refresh
@@ -260,10 +366,15 @@ var _new = (function()
 
 				addItemsToList(cont, data.responseJSON);
 			}});
-
 	}
 
 	$( document ).delegate("#new", "pagecreate", refresh);
+	$(function()
+	{
+		$('#new ul[data-role="listview"]').listview();
+
+		$('#player').on('playerStateChanged', refresh);
+	});
 
 	return {
 	};
