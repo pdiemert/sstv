@@ -10,8 +10,6 @@ block head
 
     script(src="/jquery/jquery.js")
     script(src="/jquery/mobile/jquery.mobile-1.4.2.min.js")
-    //script(src="/javascripts/jquery/jquery-1.11.1.js")
-    //script(src="/javascripts/jquery/mobile/jquery.mobile-1.4.2.min.js")
 
     script(src="/javascripts/client.js", type="text/javascript")
 
@@ -26,9 +24,42 @@ mixin nav(panel)
                 a(href="#new", data-transition="none", class!=(panel=="new"?"ui-btn-active ui-state-persist":"")) New
 
 block content
+    div(data-role="page", data-theme="b")#home
+        div(data-role="header" data-position="fixed")
+            h1 SSTV
+            a(data-role="button", class="ui-btn-right").btnPlayer Player
+        div(data-role="content")
+            table(width="100%", cellspacing="0", cellpadding="2px")
+                tr
+                    td
+                        a(data-role="button", style="height:50px", href="#browse")#btnWatch
+                            table(width="100%", height="100%")
+                                tr
+                                    td(style="vertical-align:middle") Watch
+                tr
+                    td
+                        a(href="#", data-role="button", style="height:50px")#btnListen
+                            table(width="100%", height="100%")
+                                tr
+                                    td(style="vertical-align:middle") Listen
+                tr
+                    td
+                        a(href="#", data-role="button", style="height:50px")#btnFind
+                            table(width="100%", height="100%")
+                                tr
+                                    td(style="vertical-align:middle") Find
+                tr
+                    td
+                        a(href="#", data-role="button", style="height:50px")#btnFix
+                            table(width="100%", height="100%")
+                                tr
+                                    td(style="vertical-align:middle") Fix
+
+
     div(data-role="page", data-theme="b")#browse
         div(data-role="header" data-position="fixed")
-            a(data-role="button")#btnBrowseBack Back
+            a(data-role="button", class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left ui-btn-icon-notext btnBrowseBack")
+            a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
             h1 Browse
             a(data-role="button", class="ui-btn-right").btnPlayer Player
         div(data-role="content")
@@ -38,6 +69,7 @@ block content
 
     div(data-role="page", data-theme="b")#recent
         div(data-role="header" data-position="fixed")
+            a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
             h1 Recent
             a(data-role="button", class="ui-btn-right").btnPlayer Player
         div(data-role="content")
@@ -47,8 +79,9 @@ block content
 
     div(data-role="page", data-theme="b")#new
         div(data-role="header" data-position="fixed")
+            a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
             h1 New
-            a(data-role="button", class="ui-btn-right").btnPlayer Player
+            a(data-role="button", class="ui-btn ui-btn-right ui-icon-grid ui-btn-icon-left ui-btn-icon-notext").btnPlayer Player
         div(data-role="content")
             ul(data-role='listview')
         div(data-role="footer", data-position="fixed")
@@ -61,7 +94,10 @@ block content
             table(width="100%", cellspacing="0", cellpadding="2px")
                 tr
                     td(colspan="2")
-                        a(href="#", data-role="button", style="height:50px")#btnPlay Play
+                        a(href="#", data-role="button", style="height:50px")#btnPlay
+                            table(width="100%", height="100%")
+                                tr
+                                    td(style="vertical-align:middle") Play
                 tr
                     td
                         a(href="#", data-role="button")#btnBack10 &lt;

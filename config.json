@@ -9,6 +9,7 @@
 	"refresh_on_start" : true,
 	"fullscreen" : false,
 	"desktop_overlay" : false,
+	"audio_channels" : 6,
 	"debug" : true,
 	"webvideo_subscriptions" : {"wimp" : "all", "seinfeld" : "all", "youtube" : { "channel" : "TEDtalksDirector", "title" : "TED"}}
 }
