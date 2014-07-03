@@ -6,7 +6,7 @@
 	"media_dir" : "/Volumes/c$/Media",
 	"image_dir" : "images/media",
 	"mpv_extensions" : ["3GP", "3IV", "3GP", "3IV", "ASF", "AVI", "CPK", "DAT", "DIVX", "DV", "FLAC", "FLI", "FLV", "H264", "I263", "M2TS", "M4V", "MKV", "MOV", "MP2", "MP4", "MPEG", "MPG", "MPG2", "MPG4", "NSV", "NUT", "NUV", "OGG", "OGM", "QT", "RM", "RMVB", "VCD", "VFW", "VOB", "WEBM", "WMV"],
-	"refresh_on_start" : true,
+	"refresh_on_start" : false,
 	"fullscreen" : false,
 	"desktop_overlay" : false,
 	"debug" : true,
