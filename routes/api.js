@@ -7,7 +7,8 @@ var _router = _express.Router();
 var _path = require('path');
 
 var _player = require('../lib/player');
-var _channels = require('../lib/browse');
+var _channels = require('../lib/channels');
+
 var _db = require('../lib/db');
 var _moment = require('moment');
 
@@ -75,7 +76,7 @@ function makeItems(res)
 	});
 }
 
-_router.get('/browse*', function(req, res)
+function getChannelItems(req, res)
 {
 	var url = _url.parse(req.url);
 
@@ -83,16 +84,21 @@ _router.get('/browse*', function(req, res)
 
 	var parts = url.pathname.split('/');
 
+	var name = parts[1];
+
 	var path = parts.slice(2);
 
-	_channels.getItems(path, function(err, items)
+	_channels.getItems(name, path, function(err, items)
 	{
 		if (err)
 			return res.send([]);
 
 		res.send(makeItems(items));
 	});
-});
+}
+
+_router.get('/browse*', getChannelItems);
+_router.get('/find*', getChannelItems);
 
 
 _router.get('/new', function(req, response)

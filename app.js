@@ -5,6 +5,7 @@ var _logger = require('./lib/logger');
 
 require('./lib/db');
 require('./lib/browse');
+require('./lib/find');
 
 var express = require('express');
 var path = require('path');
