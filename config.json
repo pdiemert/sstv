@@ -14,5 +14,5 @@
 	"desktop_overlay" : false,
 	"audio_channels" : 2,
 	"debug" : true,
-	"webvideo_subscriptions" : {"laughingsquid" : "all"}
+	"webvideo_subscriptions" : {"seinfeld" : "all", "wimp" : "all"}
 }
