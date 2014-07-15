@@ -59,6 +59,12 @@ _router.get('/player/mode', function (req, res)
 	res.send({ mode : _player.mode() });
 });
 
+_router.get('/player/caudio', function (req, res)
+{
+	_player.cycleAudio();
+
+	res.send({ mode : _player.mode() });
+});
 
 function makeItems(res)
 {

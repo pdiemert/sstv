@@ -127,6 +127,10 @@ var _player = (function()
 		{
 			doAction('mute');
 		});
+		$('#btnAudioTrack').click(function()
+		{
+			doAction('caudio');
+		});
 
 		$('.btnPlayer').click(function()
 		{

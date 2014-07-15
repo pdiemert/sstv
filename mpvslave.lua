@@ -80,3 +80,9 @@ function quit_handler()
     print('ack / -');
 end
 mp.add_key_binding("-", "myquit", quit_handler)
+
+function caudio_handler()
+    mp.command("cycle audio");
+    print('ack / :');
+end
+mp.add_key_binding(":", "caudio", caudio_handler)
