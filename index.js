@@ -21,6 +21,8 @@ var _opt = require('optimist');
 var _argv = _opt
 	.usage('A stupid simple home media center')
 	.options('w', { alias : 'webvideo', describe : 'only update the web video source specified' })
+	.options('o', { alias : 'nzbmovies', describe : 'only update the NZB movies available' })
+	.options('n', { alias : 'noupdate', describe : 'do not update watched sources' })
 	.options('!', { alias : 'wipe', describe : 'wipes the database on startup' })
 	.options('h', { alias : 'help', describe : 'show this message' })
 	.argv;
@@ -39,9 +41,31 @@ if (_argv.wipe)
 
 if (_argv.webvideo)
 {
-	_conf.update_only = {webvideo : _argv.webvideo};
+	if (!_conf.update_only)
+		_conf.update_only = {};
+
+	_conf.update_only.webvideo = _argv.webvideo;
 	_logger.info('Only updating webvideo %s', _argv.webvideo);
 }
+
+if (_argv.nzbmovies)
+{
+	if (!_conf.update_only)
+		_conf.update_only = {};
+
+	_conf.update_only.nzbmovies = true;
+
+	_logger.info('Only updating NZB movies');
+}
+
+if (_argv.noupdate)
+{
+	if (!_conf.update_only)
+		_conf.update_only = {};
+
+	_logger.info('No updating any watched sources');
+}
+
 var app = require('./app');
 
 app.set('port', process.env.PORT || 3000);
