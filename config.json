@@ -3,16 +3,13 @@
 	"mpv_command" : "/usr/local/bin/mpv",
 	"thetvdb_apikey" : "FF7E46A89F28BBE2",
 	"themoviedb_apikey" : "e452c43554c30479b59b6d2465f8e62a",
-	"omgwtfnzb_apikey" : "61b60dd784bd1cae4860f1e8498f91cb",
-	"omgwtfnzb_cookname" : "pdiemert2",
-	"omgwtfnzb_cookpass" : "f4d5a10dec320cdbde5e2afc712b36f9",
-	"media_dir" : "/Volumes/c$/Media",
+	"media_dir" : "/Volumes/192.168.0.105/Media",
 	"image_dir" : "images/media",
 	"mpv_extensions" : ["3GP", "3IV", "3GP", "3IV", "ASF", "AVI", "CPK", "DAT", "DIVX", "DV", "FLAC", "FLI", "FLV", "H264", "I263", "M2TS", "M4V", "MKV", "MOV", "MP2", "MP4", "MPEG", "MPG", "MPG2", "MPG4", "NSV", "NUT", "NUV", "OGG", "OGM", "QT", "RM", "RMVB", "VCD", "VFW", "VOB", "WEBM", "WMV"],
 	"refresh_on_start" : true,
-	"fullscreen" : false,
+	"fullscreen" : true,
 	"desktop_overlay" : false,
-	"audio_channels" : 2,
+	"audio_channels" : 6,
 	"debug" : true,
-	"webvideo_subscriptions" : {"seinfeld" : "all", "wimp" : "all"}
+	"webvideo_subscriptions" : {"wimp" : "all", "seinfeld" : "all", "laughingsquid" : "all", "youtube" : [{ "channel" : "TEDtalksDirector", "title" : "TED"}, { "channel" : "RayWilliamJohnson", "title" : "eq3"}]}
 }
