@@ -11,7 +11,7 @@ var _findbrowse = (function()
 			url : '/api/find' + _path,
 			complete: function(data, status)
 			{
-				_data = JSON.parse(data.responseText);
+				_data = data.responseJSON;
 
 				var cont = $('#find ul[data-role="listview"]');
 

@@ -64,7 +64,7 @@ var _helper = (function()
 					}
 
 				}
-				else if (e.type === 'Movie')
+				else if (e.type === 'Movie' || e.type === 'NZBMovie')
 				{
 					a.append($('<h3></h3>').addClass('ui-li-heading').text(e.title + ' (' + e.year + ')'));
 

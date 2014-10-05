@@ -112,6 +112,17 @@ _router.get('/new', function(req, response)
 
 	_db.Media.findAll({where: { state : 'ready', last_play_date : null }, order : [['createdAt','DESC']], limit : 50}).complete(function(err, res)
 	{
+		function key(m)
+		{
+			return m.type + ':' + (m.createdAt.getTime() / 86400000) + ':' + (m.series || m.source_name);
+		}
+
+		// Resort by type / day / series_name
+		res.sort(function(l,r)
+		{
+			return key(l).localeCompare(key(r));
+		});
+
 		if (err)
 			return response.send([]);
 
