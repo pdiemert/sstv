@@ -122,6 +122,16 @@ var _helper = (function()
 
 	}
 
+	$(function()
+	{
+		$( document ).on( "pagebeforechange", function(e, data){
+			
+			var toPage = data.toPage[0].id;
+			if (toPage)
+				localStorage.page = '#' + toPage;
+		});
+	});
+	
 	return {
 		addItemsToList : addItemsToList
 	};

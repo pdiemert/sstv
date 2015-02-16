@@ -14,10 +14,6 @@ function seek_b01_handler()
 end
 mp.add_key_binding("[", "seekb01", seek_b01_handler)
 
-
-
-
-
 function seek_1_handler()
     mp.command("seek 60");
     print("ack / !");
@@ -79,10 +75,12 @@ function quit_handler()
     mp.command("quit_watch_later");
     print('ack / -');
 end
-mp.add_key_binding("-", "myquit", quit_handler)
+mp.add_forced_key_binding("-", "myquit", quit_handler)
 
 function caudio_handler()
     mp.command("cycle audio");
     print('ack / :');
 end
 mp.add_key_binding(":", "caudio", caudio_handler)
+
+print("Keys bound in script " .. mp.get_script_name())

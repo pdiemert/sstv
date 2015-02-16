@@ -5,6 +5,7 @@ var _express = require('express');
 var _str = require('underscore.string');
 var _router = _express.Router();
 var _path = require('path');
+var _watchers = require('../lib/watchers');
 
 var _player = require('../lib/player');
 var _channels = require('../lib/channels');
@@ -105,8 +106,10 @@ function getChannelItems(req, res)
 
 _router.get('/browse*', getChannelItems);
 _router.get('/find*', getChannelItems);
+_router.get('/new*', getChannelItems);
 
 
+/*
 _router.get('/new', function(req, response)
 {
 
@@ -129,7 +132,7 @@ _router.get('/new', function(req, response)
 		response.send(makeItems(res));
 	});
 });
-
+*/
 _router.get('/recent', function(req, response)
 {
 
@@ -140,6 +143,16 @@ _router.get('/recent', function(req, response)
 
 		response.send(makeItems(res));
 	});
+});
+
+_router.get('/refresh', function(req, response)
+{
+	_watchers.refresh();
+});
+
+_router.get('/status', function(req, response)
+{
+	response.send({ status : _watchers.getStatus()});
 });
 
 module.exports = _router;

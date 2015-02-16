@@ -1,135 +1,166 @@
 extends layout
 block head
-    meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui")
+	meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui")
 
-    link(rel="stylesheet", href="/jquery/mobile/css/themes/default/jquery.mobile-1.4.2.min.css")
-    //link(rel="stylesheet", href="/javascripts/jquery/mobile/jquery.mobile-1.4.2.min.css")
-    link(rel='stylesheet', href="/stylesheets/icons.css")
-    link(rel='stylesheet', href="/stylesheets/iphone.css")
+	link(rel="stylesheet", href="/jquery/mobile/css/themes/default/jquery.mobile-1.4.2.min.css")
+	//link(rel="stylesheet", href="/javascripts/jquery/mobile/jquery.mobile-1.4.2.min.css")
+	link(rel='stylesheet', href="/stylesheets/icons.css")
+	link(rel='stylesheet', href="/stylesheets/iphone.css")
 
+	script(src="/jquery/jquery.js")
+	script(src="/jquery/mobile/jquery.mobile-1.4.2.min.js")
 
-    script(src="/jquery/jquery.js")
-    script(src="/jquery/mobile/jquery.mobile-1.4.2.min.js")
-
-    script(src="/javascripts/client.js", type="text/javascript")
+	script(src="/javascripts/client.js", type="text/javascript")
 
 mixin watchnav(panel)
-    div(data-role="navbar")
-        ul
-            li
-                a(href="#new", data-transition="none", class!=(panel=="new"?"ui-btn-active ui-state-persist":"")) New
-            li
-                a(href="#browse", data-transition="none", class!=(panel=="browse"?"ui-btn-active ui-state-persist":"")) Browse
-            li
-                a(href="#recent", data-transition="none", class!=(panel=="recent"?"ui-btn-active ui-state-persist":"")) Recent
+	div(data-role="navbar")
+		ul
+			li
+				a(href="#new", data-transition="none", class!=(panel=="new"?"ui-btn-active ui-state-persist":"")) New
+			li
+				a(href="#browse", data-transition="none", class!=(panel=="browse"?"ui-btn-active ui-state-persist":"")) Browse
+			li
+				a(href="#recent", data-transition="none", class!=(panel=="recent"?"ui-btn-active ui-state-persist":"")) Recent
 
 block content
-    div(data-role="page", data-theme="b")#home
-        div(data-role="header" data-position="fixed")
-            h1 SSTV
-            a(data-role="button", class="ui-btn-right").btnPlayer Player
-        div(data-role="content")
-            table(width="100%", cellspacing="0", cellpadding="2px")
-                tr
-                    td
-                        a(data-role="button", style="height:50px", href="#new")#btnWatch
-                            table(width="100%", height="100%")
-                                tr
-                                    td(style="vertical-align:middle") Watch
-                tr
-                    td
-                        a(href="#", data-role="button", style="height:50px")#btnListen
-                            table(width="100%", height="100%")
-                                tr
-                                    td(style="vertical-align:middle") Listen
-                tr
-                    td
-                        a(href="#find", data-role="button", style="height:50px")#btnFind
-                            table(width="100%", height="100%")
-                                tr
-                                    td(style="vertical-align:middle") Find
-                tr
-                    td
-                        a(href="#", data-role="button", style="height:50px")#btnFix
-                            table(width="100%", height="100%")
-                                tr
-                                    td(style="vertical-align:middle") Fix
+	div(data-role="page", data-theme="b")#landing
+		script(type='text/javascript').
+			var page = localStorage.page || '#home';
+			console.log('going to ' + page);
+			$(window).on('navigate', function(e, data){
+				for(var x in data.state)
+					console.log(x + ' = ' + data.state[x]);
+			});
+			$.mobile.navigate(page);
 
+	div(data-role="page", data-theme="b")#home
+		div(data-role="header" data-position="fixed")
+			h1 SSTV
+			a(data-role="button", class="ui-btn-right").btnPlayer Player
+		div(data-role="content")
+			table(width="100%", cellspacing="0", cellpadding="2px")
+				tr
+					td
+						a(data-role="button", style="height:50px", href="#new")#btnWatch
+							table(width="100%", height="100%")
+								tr
+									td(style="vertical-align:middle") Watch
+				tr
+					td
+						a(href="#", data-role="button", style="height:50px")#btnListen
+							table(width="100%", height="100%")
+								tr
+									td(style="vertical-align:middle") Listen
+				tr
+					td
+						a(href="#find", data-role="button", style="height:50px")#btnFind
+							table(width="100%", height="100%")
+								tr
+									td(style="vertical-align:middle") Find
+				tr
+					td
+						a(href="#more", data-role="button", style="height:50px")#btnMore
+							table(width="100%", height="100%")
+								tr
+									td(style="vertical-align:middle") More
 
-    div(data-role="page", data-theme="b")#browse
-        div(data-role="header" data-position="fixed")
-            a(data-role="button", class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left ui-btn-icon-notext btnBrowseBack")
-            a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
-            h1 Browse
-            a(data-role="button", class="ui-btn-right").btnPlayer Player
-        div(data-role="content")
-            ul(data-role='listview')
-        div(data-role="footer", data-position="fixed")
-            +watchnav("browse")
+	div(data-role="page", data-theme="b")#more
+		div(data-role="header" data-position="fixed")
+			a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
+			h1 More
+			a(data-role="button", class="ui-btn-right").btnPlayer Player
+		div(data-role="content")
+			table(width="100%", cellspacing="0", cellpadding="2px")
+				tr
+					td
+						a(data-role="button", style="height:50px", href="#")#btnRefresh
+							table(width="100%", height="100%")
+								tr
+									td(style="vertical-align:middle") Refresh
+				tr
+					td
+						a(href="#", data-role="button", style="height:50px")#btnFix
+							table(width="100%", height="100%")
+								tr
+									td(style="vertical-align:middle") Fix
+				tr
+					td#status(style="vertical-align:middle; height:50px")
 
-    div(data-role="page", data-theme="b")#find
-        div(data-role="header" data-position="fixed")
-            a(data-role="button", class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left ui-btn-icon-notext btnBrowseBack")
-            a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
-            h1 Find
-            a(data-role="button", class="ui-btn-right").btnPlayer Player
-        div(data-role="content")
-            ul(data-role='listview')
-        div(data-role="footer", data-position="fixed")
+	div(data-role="page", data-theme="b")#browse
+		div(data-role="header" data-position="fixed")
+			a(data-role="button", class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left ui-btn-icon-notext btnBrowseBack")
+			a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
+			h1 Browse
+			a(data-role="button", class="ui-btn-right").btnPlayer Player
+		div(data-role="content")
+			ul(data-role='listview')
+		div(data-role="footer", data-position="fixed")
+			+watchnav("browse")
 
-    div(data-role="page", data-theme="b")#recent
-        div(data-role="header" data-position="fixed")
-            a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
-            h1 Recent
-            a(data-role="button", class="ui-btn-right").btnPlayer Player
-        div(data-role="content")
-            ul(data-role='listview')
-        div(data-role="footer", data-position="fixed")
-            +watchnav("recent")
+	div(data-role="page", data-theme="b")#find
+		div(data-role="header" data-position="fixed")
+			a(data-role="button", class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left ui-btn-icon-notext btnBrowseBack")
+			a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
+			h1 Find
+			a(data-role="button", class="ui-btn-right").btnPlayer Player
+		div(data-role="content")
+			ul(data-role='listview')
+		div(data-role="footer", data-position="fixed")
 
-    div(data-role="page", data-theme="b")#new
-        div(data-role="header" data-position="fixed")
-            a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
-            h1 New
-            a(data-role="button", class="ui-btn ui-btn-right ui-icon-grid ui-btn-icon-left ui-btn-icon-notext").btnPlayer Player
-        div(data-role="content")
-            ul(data-role='listview')
-        div(data-role="footer", data-position="fixed")
-            +watchnav("new")
+	div(data-role="page", data-theme="b")#recent
+		div(data-role="header" data-position="fixed")
+			a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
+			h1 Recent
+			a(data-role="button", class="ui-btn-right").btnPlayer Player
+		div(data-role="content")
+			ul(data-role='listview')
+		div(data-role="footer", data-position="fixed")
+			+watchnav("recent")
 
-    div(data-role="page", data-theme="b", data-overlay-theme="b")#player
-        div(data-role="header" data-position="fixed")
-            h1 Player
-        div(data-role="content")
-            table(width="100%", cellspacing="0", cellpadding="2px")
-                tr
-                    td(colspan="2")
-                        a(href="#", data-role="button", style="height:50px")#btnPlay
-                            table(width="100%", height="100%")
-                                tr
-                                    td(style="vertical-align:middle") Play
-                tr
-                    td
-                        a(href="#", data-role="button")#btnBack10 &lt;
-                    td
-                        a(href="#", data-role="button")#btnFor10 &gt;
-                tr
-                    td
-                        a(href="#", data-role="button")#btnBack60 &lt;&lt;
-                    td
-                        a(href="#", data-role="button")#btnFor60 &gt;&gt;
-                tr
-                    td
-                        a(href="#", data-role="button")#btnBack600 &lt;&lt;&lt;
-                    td
-                        a(href="#", data-role="button")#btnFor600 &gt;&gt;&gt;
-                tr
-                    td
-                        a(href="#", data-role="button")#btnAudioTrack Aud. Tr.
-                    td
-                        a(href="#", data-role="button")#btnMute Mute
-                tr
-                    td
-                        a(href="#", data-role="button")#btnSeekStart |&lt;&lt;
-                    td
-                        a(href="#", data-role="button")#btnStop Stop
+	div(data-role="page", data-theme="b")#new
+		div(data-role="header" data-position="fixed")
+			a(data-role="button", class="ui-btn ui-btn-left ui-icon-back ui-btn-icon-left ui-btn-icon-notext btnNewBack")
+			a(data-role="button", class="ui-btn ui-btn-left ui-icon-home ui-btn-icon-left ui-btn-icon-notext btnHome", href="#home")
+			h1 New
+			a(data-role="button", class="ui-btn ui-btn-right ui-icon-grid ui-btn-icon-left ui-btn-icon-notext").btnPlayer Player
+		div(data-role="content")
+			ul(data-role='listview')
+		div(data-role="footer", data-position="fixed")
+			+watchnav("new")
+
+	div(data-role="page", data-theme="b", data-overlay-theme="b")#player
+		div(data-role="header" data-position="fixed")
+			h1 Player
+		div(data-role="content")
+			table(width="100%", cellspacing="0", cellpadding="2px")
+				tr
+					td(colspan="2")
+						a(href="#", data-role="button", style="height:50px")#btnPlay
+							table(width="100%", height="100%")
+								tr
+									td(style="vertical-align:middle") Play
+				tr
+					td
+						a(href="#", data-role="button")#btnBack10 &lt;
+					td
+						a(href="#", data-role="button")#btnFor10 &gt;
+				tr
+					td
+						a(href="#", data-role="button")#btnBack60 &lt;&lt;
+					td
+						a(href="#", data-role="button")#btnFor60 &gt;&gt;
+				tr
+					td
+						a(href="#", data-role="button")#btnBack600 &lt;&lt;&lt;
+					td
+						a(href="#", data-role="button")#btnFor600 &gt;&gt;&gt;
+				tr
+					td
+						a(href="#", data-role="button")#btnAudioTrack Aud. Tr.
+					td
+						a(href="#", data-role="button")#btnMute Mute
+				tr
+					td
+						a(href="#", data-role="button")#btnSeekStart |&lt;&lt;
+					td
+						a(href="#", data-role="button")#btnStop Stop

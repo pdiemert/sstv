@@ -45,8 +45,8 @@ var _player = (function()
 	}
 	function monitor()
 	{
-		if (!_active)
-			return;
+//		if (!_active)
+//			return;
 
 		$.ajax({url : '/api/player/mode', complete: function(data)
 		{
@@ -145,6 +145,7 @@ var _player = (function()
 	$(function()
 	{
 		$('#player').dialog();
+		monitor();
 	});
 
 	return {
