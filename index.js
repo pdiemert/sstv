@@ -68,7 +68,7 @@ if (_argv.noupdate)
 
 var app = require('./app');
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', _conf.port || process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function() {
 	_logger.info('Listening on port ' + server.address().port);
